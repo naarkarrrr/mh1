@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
-import { PT_Sans, Space_Grotesk, Source_Code_Pro } from 'next/font/google';
+import { Orbitron, Inter, Source_Code_Pro } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/hooks/use-auth';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 
-const ptSans = PT_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '700'],
   variable: '--font-body',
 });
 
-const spaceGrotesk = Space_Grotesk({
+const orbitron = Orbitron({
   subsets: ['latin'],
   variable: '--font-headline',
 });
@@ -36,8 +35,8 @@ export default function RootLayout({
       <body
         className={cn(
           'min-h-screen bg-background font-body antialiased',
-          ptSans.variable,
-          spaceGrotesk.variable,
+          inter.variable,
+          orbitron.variable,
           sourceCodePro.variable
         )}
       >

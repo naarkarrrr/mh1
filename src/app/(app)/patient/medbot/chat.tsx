@@ -11,6 +11,7 @@ import { Send, Bot, User as UserIcon, CornerDownLeft, Calendar, Pill } from 'luc
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { AiStatus } from '@/components/layout/ai-status';
 
 type Message = {
   role: 'user' | 'bot';
@@ -71,20 +72,28 @@ export function Chat() {
   };
 
   const QuickActionButton = ({ text, icon: Icon }: { text: string; icon: React.ElementType }) => (
-    <Button variant="outline" size="sm" className="h-auto" onClick={() => setInput(text)}>
+    <Button
+      variant="outline"
+      size="sm"
+      className="h-auto backdrop-blur-sm bg-white/5 border-primary/20 hover:bg-primary/10"
+      onClick={() => setInput(text)}
+    >
       <Icon className="mr-2 h-4 w-4" />
       {text}
     </Button>
   );
 
   return (
-    <Card className="h-full w-full max-w-4xl mx-auto flex flex-col shadow-2xl">
+    <Card className="h-full w-full max-w-4xl mx-auto flex flex-col glass-pane">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 font-headline">
-          <Bot />
-          MedBot Assistant
-        </CardTitle>
-        <CardDescription>Your personal AI health companion.</CardDescription>
+         <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+            <Bot className="text-accent"/>
+            MedBot Assistant
+          </CardTitle>
+          <AiStatus />
+        </div>
+        <CardDescription>Your personal AI health companion, ready to assist.</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col gap-4 overflow-hidden">
         <ScrollArea className="flex-1 pr-4 -mr-4" ref={scrollAreaRef}>
@@ -95,44 +104,44 @@ export function Chat() {
                 className={cn('flex items-start gap-3', message.role === 'user' ? 'justify-end' : '')}
               >
                 {message.role === 'bot' && (
-                  <Avatar className="h-8 w-8 border">
-                    <AvatarFallback><Bot size={18}/></AvatarFallback>
+                  <Avatar className="h-8 w-8 border-2 border-accent shadow-glow-accent">
+                    <AvatarFallback className="bg-transparent"><Bot size={18} className="text-accent"/></AvatarFallback>
                   </Avatar>
                 )}
                 <div
                   className={cn(
-                    'max-w-md rounded-lg px-4 py-3 text-sm',
+                    'max-w-xl rounded-lg px-4 py-3 text-sm animate-fade-in',
                     message.role === 'user'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted'
+                      ? 'glass-pane-light text-white'
+                      : 'bg-white/5'
                   )}
                 >
-                  {message.text}
+                  <p className="whitespace-pre-wrap">{message.text}</p>
                 </div>
                  {message.role === 'user' && user && (
-                   <Avatar className="h-8 w-8 border">
+                   <Avatar className="h-8 w-8 border-2 border-primary shadow-glow-primary">
                       <AvatarImage src={user.avatar}/>
-                     <AvatarFallback><UserIcon size={18}/></AvatarFallback>
+                     <AvatarFallback className="bg-transparent text-primary"><UserIcon size={18}/></AvatarFallback>
                    </Avatar>
                  )}
               </div>
             ))}
             {isPending && (
-               <div className="flex items-start gap-3">
-                 <Avatar className="h-8 w-8 border">
-                    <AvatarFallback><Bot size={18}/></AvatarFallback>
+               <div className="flex items-start gap-3 animate-fade-in">
+                 <Avatar className="h-8 w-8 border-2 border-accent shadow-glow-accent">
+                    <AvatarFallback className="bg-transparent"><Bot size={18} className="text-accent"/></AvatarFallback>
                   </Avatar>
-                <div className="max-w-md rounded-lg px-4 py-3 text-sm bg-muted flex items-center gap-2">
-                    <span className="h-2 w-2 bg-foreground rounded-full animate-pulse delay-0"></span>
-                    <span className="h-2 w-2 bg-foreground rounded-full animate-pulse delay-150"></span>
-                    <span className="h-2 w-2 bg-foreground rounded-full animate-pulse delay-300"></span>
+                <div className="max-w-md rounded-lg px-4 py-3 text-sm bg-white/5 flex items-center gap-2">
+                    <span className="h-2 w-2 bg-accent rounded-full animate-pulse-fast delay-0"></span>
+                    <span className="h-2 w-2 bg-accent rounded-full animate-pulse-fast delay-150"></span>
+                    <span className="h-2 w-2 bg-accent rounded-full animate-pulse-fast delay-300"></span>
                 </div>
               </div>
             )}
           </div>
         </ScrollArea>
-        <div className="mt-auto">
-            <div className="flex gap-2 mb-2 flex-wrap">
+        <div className="mt-auto pt-4 border-t border-white/10">
+            <div className="flex gap-2 mb-3 flex-wrap">
                 <QuickActionButton text="What are the side effects of Lisinopril?" icon={Pill} />
                 <QuickActionButton text="Schedule a follow-up with Dr. Reed" icon={Calendar} />
             </div>
@@ -140,18 +149,15 @@ export function Chat() {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask a question..."
-              className="pr-24"
+              placeholder="Ask a question or type a command..."
+              className="pr-24 bg-white/5 border-white/10 focus:ring-accent focus:border-accent"
               disabled={isPending}
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-2">
-                <Button type="submit" size="sm" disabled={isPending || !input.trim()}>
-                Send
-                <Send className="ml-2 h-4 w-4" />
+                <Button type="submit" size="sm" disabled={isPending || !input.trim()} className="neon-button-primary">
+                  Send
+                  <Send className="ml-2 h-4 w-4" />
                 </Button>
-                <span className="hidden md:flex items-center text-muted-foreground text-xs ml-2 p-1 border rounded-md">
-                    <CornerDownLeft size={12}/>
-                </span>
             </div>
             </form>
         </div>

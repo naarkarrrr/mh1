@@ -1,9 +1,8 @@
 'use client';
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
-import { Skeleton } from '@/components/ui/skeleton';
+import { HeartPulse } from 'lucide-react';
 
 export default function HomePage() {
   const { user, loading } = useAuth();
@@ -14,29 +13,20 @@ export default function HomePage() {
       if (!user) {
         router.push('/login');
       } else {
-        switch (user.role) {
-          case 'patient':
-            router.push('/patient/dashboard');
-            break;
-          case 'doctor':
-            router.push('/doctor/dashboard');
-            break;
-          case 'admin':
-            router.push('/admin/dashboard');
-            break;
-          default:
-            router.push('/login');
-        }
+        // User is logged in, redirect to the main app page
+        // which will handle role-based redirection.
+        router.push('/patient/dashboard'); // Or a generic '/app' route
       }
     }
   }, [user, loading, router]);
 
+  // Show a loading screen while checking auth status
   return (
     <div className="flex h-screen w-full items-center justify-center bg-background">
-      <div className="space-y-4 p-8">
-        <Skeleton className="h-12 w-64" />
-        <Skeleton className="h-8 w-full" />
-        <Skeleton className="h-8 w-3/4" />
+      <div className="flex flex-col items-center gap-4">
+        <HeartPulse className="h-16 w-16 animate-pulse text-primary" />
+        <h1 className="text-2xl font-headline text-glow-primary">VitalLens</h1>
+        <p className="text-muted-foreground">Authenticating Interface...</p>
       </div>
     </div>
   );

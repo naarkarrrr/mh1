@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,26 +11,43 @@ import { HeartPulse } from 'lucide-react';
 export default function RegisterPage() {
   const bgImage = PlaceHolderImages.find((img) => img.id === 'login-background');
   return (
-    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen relative">
+        <div className="absolute top-0 left-0 w-full h-full z-0">
+         {bgImage && (
+          <Image
+            src={bgImage.imageUrl}
+            alt={bgImage.description}
+            width="1920"
+            height="1080"
+            className="h-full w-full object-cover"
+            data-ai-hint={bgImage.imageHint}
+            priority
+          />
+        )}
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-md"></div>
+      </div>
+
+      <div className="flex items-center justify-center py-12 z-10">
+        <div className="mx-auto grid w-[400px] gap-6">
           <div className="grid gap-2 text-center">
-             <div className="flex items-center justify-center gap-2">
-                <HeartPulse className="h-8 w-8 text-primary" />
-                <h1 className="text-3xl font-bold font-headline">VitalLens</h1>
+             <div className="flex items-center justify-center gap-3">
+                <HeartPulse className="h-10 w-10 text-primary" />
+                <h1 className="text-5xl font-bold font-headline text-glow-primary">VitalLens</h1>
             </div>
-            <p className="text-balance text-muted-foreground">
-              Enter your information to create an account
+            <p className="text-balance text-muted-foreground text-lg">
+              Create your secure health account
             </p>
           </div>
           <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="first-name">First name</Label>
-              <Input id="first-name" placeholder="Max" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="last-name">Last name</Label>
-              <Input id="last-name" placeholder="Robinson" required />
+            <div className="grid grid-cols-2 gap-4">
+                 <div className="grid gap-2">
+                    <Label htmlFor="first-name">First name</Label>
+                    <Input id="first-name" placeholder="Max" required className="bg-white/5 border-white/20"/>
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="last-name">Last name</Label>
+                    <Input id="last-name" placeholder="Robinson" required className="bg-white/5 border-white/20"/>
+                </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -38,38 +56,30 @@ export default function RegisterPage() {
                 type="email"
                 placeholder="m@example.com"
                 required
+                className="bg-white/5 border-white/20"
               />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" />
+              <Input id="password" type="password" className="bg-white/5 border-white/20"/>
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full h-12 text-lg neon-button-primary">
               Create an account
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full h-12 text-lg bg-transparent border-white/20 hover:bg-white/10 hover:text-white">
               Sign up with Google
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{' '}
-            <Link href="/login" className="underline">
+            <Link href="/login" className="underline text-accent hover:text-glow-accent">
               Sign in
             </Link>
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
-        {bgImage && (
-          <Image
-            src={bgImage.imageUrl}
-            alt={bgImage.description}
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            data-ai-hint={bgImage.imageHint}
-          />
-        )}
+       <div className="hidden lg:block z-10">
+        {/* This side is now part of the background */}
       </div>
     </div>
   );

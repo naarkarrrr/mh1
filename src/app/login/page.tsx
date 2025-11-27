@@ -11,59 +11,65 @@ export default function LoginPage() {
   const bgImage = PlaceHolderImages.find((img) => img.id === 'login-background');
 
   return (
-    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen relative">
+      <div className="absolute top-0 left-0 w-full h-full z-0">
+         {bgImage && (
+          <Image
+            src={bgImage.imageUrl}
+            alt={bgImage.description}
+            width="1920"
+            height="1080"
+            className="h-full w-full object-cover"
+            data-ai-hint={bgImage.imageHint}
+            priority
+          />
+        )}
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-md"></div>
+      </div>
+      
+      <div className="flex items-center justify-center py-12 z-10">
+        <div className="mx-auto grid w-[350px] gap-8">
           <div className="grid gap-2 text-center">
-            <div className="flex items-center justify-center gap-2">
-                <HeartPulse className="h-8 w-8 text-primary" />
-                <h1 className="text-3xl font-bold font-headline">VitalLens</h1>
+            <div className="flex items-center justify-center gap-3">
+                <HeartPulse className="h-10 w-10 text-primary" />
+                <h1 className="text-5xl font-bold font-headline text-glow-primary">VitalLens</h1>
             </div>
-            <p className="text-balance text-muted-foreground">
-              Select a role to log in to the system
+            <p className="text-balance text-muted-foreground text-lg">
+              The Future of Predictive Healthcare.
             </p>
           </div>
           <div className="grid gap-4">
             <Button
               onClick={() => login('patient')}
-              className="w-full"
+              className="w-full h-12 text-lg neon-button-primary"
             >
               Login as Patient
             </Button>
             <Button
               onClick={() => login('doctor')}
               variant="secondary"
-              className="w-full"
+              className="w-full h-12 text-lg bg-accent/20 border border-accent text-accent hover:bg-accent/30 hover:shadow-glow-accent"
             >
               Login as Doctor
             </Button>
             <Button
               onClick={() => login('admin')}
               variant="outline"
-              className="w-full"
+              className="w-full h-12 text-lg bg-transparent border-white/20 hover:bg-white/10 hover:text-white"
             >
               Login as Admin
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="underline">
+            <Link href="/register" className="underline text-accent hover:text-glow-accent">
               Sign up
             </Link>
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
-        {bgImage && (
-          <Image
-            src={bgImage.imageUrl}
-            alt={bgImage.description}
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            data-ai-hint={bgImage.imageHint}
-          />
-        )}
+      <div className="hidden lg:block z-10">
+        {/* This side is now part of the background */}
       </div>
     </div>
   );

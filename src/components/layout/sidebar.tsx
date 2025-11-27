@@ -26,18 +26,18 @@ export default function Sidebar() {
       <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="fixed top-4 left-4 z-20 bg-background/50 backdrop-blur-sm">
+            <Button variant="ghost" size="icon" className="fixed top-4 left-4 z-50 glass-pane">
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle navigation</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="flex flex-col w-72 p-0">
-             <nav className="flex-1 flex flex-col gap-4 p-4 bg-muted/40">
+          <SheetContent side="left" className="flex flex-col w-72 p-0 glass-pane !border-r-white/20">
+             <nav className="flex-1 flex flex-col gap-4 p-4">
                 <Link
                 href="#"
-                className="flex items-center gap-2 text-lg font-semibold font-headline px-2"
+                className="flex items-center gap-2 text-2xl font-semibold font-headline px-2 text-glow-primary"
               >
-                <HeartPulse className="h-6 w-6 text-primary" />
+                <HeartPulse className="h-7 w-7 text-primary" />
                 <span>VitalLens</span>
               </Link>
                 {navLinks.map((link) => (
@@ -49,11 +49,11 @@ export default function Sidebar() {
       </div>
       
       {/* Desktop Sidebar */}
-      <div className="hidden border-r bg-muted/40 lg:block lg:w-64 xl:w-72">
-        <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold font-headline">
-              <HeartPulse className="h-6 w-6 text-primary" />
+      <div className="hidden lg:block lg:w-64 xl:w-72">
+        <div className="flex h-full max-h-screen flex-col gap-2 glass-pane !rounded-none !border-l-0 !border-t-0 !border-b-0 !border-r-white/10">
+          <div className="flex h-14 items-center border-b border-white/10 px-4 lg:h-[60px] lg:px-6">
+            <Link href="/" className="flex items-center gap-2 font-semibold font-headline text-2xl text-glow-primary">
+              <HeartPulse className="h-7 w-7 text-primary" />
               <span className="">VitalLens</span>
             </Link>
           </div>
@@ -78,11 +78,11 @@ function SidebarLink({ href, icon: Icon, label }: { href: string; icon: LucideIc
     <Link
       href={href}
       className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-        isActive && 'bg-muted text-primary'
+        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-muted-foreground transition-all hover:text-white hover:bg-white/10 text-base',
+        isActive && 'bg-primary/20 text-primary font-bold shadow-glow-primary-sm'
       )}
     >
-      <Icon className="h-4 w-4" />
+      <Icon className={cn('h-5 w-5', isActive && 'text-primary')} />
       {label}
     </Link>
   );
