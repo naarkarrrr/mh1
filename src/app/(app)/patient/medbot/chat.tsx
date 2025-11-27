@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, Bot, User as UserIcon, CornerDownLeft, Calendar } from 'lucide-react';
+import { Send, Bot, User as UserIcon, CornerDownLeft, Calendar, Pill } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
