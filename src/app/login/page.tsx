@@ -8,26 +8,10 @@ import { HeartPulse } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const bgImage = PlaceHolderImages.find((img) => img.id === 'login-background');
 
   return (
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen relative">
-      <div className="absolute top-0 left-0 w-full h-full z-0">
-         {bgImage && (
-          <Image
-            src={bgImage.imageUrl}
-            alt={bgImage.description}
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover"
-            data-ai-hint={bgImage.imageHint}
-            priority
-          />
-        )}
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-md"></div>
-      </div>
-      
-      <div className="flex items-center justify-center py-12 z-10">
+      <div className="flex items-center justify-center py-12 z-10 lg:col-span-2">
         <div className="mx-auto grid w-[350px] gap-8">
           <div className="grid gap-2 text-center">
             <div className="flex items-center justify-center gap-3">
@@ -67,9 +51,6 @@ export default function LoginPage() {
             </Link>
           </div>
         </div>
-      </div>
-      <div className="hidden lg:block z-10">
-        {/* This side is now part of the background */}
       </div>
     </div>
   );
