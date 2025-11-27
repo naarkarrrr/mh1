@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "logo",
+      "description": "VitalLens logo",
+      "imageUrl": "https://images.unsplash.com/photo-1675552561536-f34c9feb3bfa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoZWFydGJlYXQlMjBsb2dvfGVufDB8fHx8MTc2NDIyODE3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "heartbeat logo"
+    },
+    {
+      "id": "login-background",
+      "description": "Abstract medical background for login screen",
+      "imageUrl": "https://images.unsplash.com/photo-1759270463144-02b90c57135d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG1lZGljYWx8ZW58MHx8fHwxNzY0MTk2MTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract medical"
+    },
+    {
+      "id": "heatmap",
+      "description": "City heatmap of health incidents",
+      "imageUrl": "https://images.unsplash.com/photo-1677678711761-09e049805d97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaXR5JTIwaGVhdG1hcHxlbnwwfHx8fDE3NjQyMjgxNzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city heatmap"
+    },
+    {
+      "id": "sos-map",
+      "description": "Map showing an SOS location",
+      "imageUrl": "https://images.unsplash.com/photo-1604357209793-fca5dca89f97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYXAlMjBsb2NhdGlvbnxlbnwwfHx8fDE3NjQxMTQwOTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "map location"
+    },
+    {
+      "id": "patient-avatar-1",
+      "description": "Avatar for a patient",
+      "imageUrl": "https://images.unsplash.com/photo-1531123414780-f74242c2b052?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY0MTQ4ODg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "patient-avatar-2",
+      "description": "Avatar for another patient",
+      "imageUrl": "https://images.unsplash.com/photo-1557053910-d9eadeed1c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2NDE3NDExN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "doctor-avatar",
+      "description": "Avatar for a doctor",
+      "imageUrl": "https://images.unsplash.com/photo-1632054226752-b1b40867f7a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjBwcm9mZXNzaW9uYWx8ZW58MHx8fHwxNzY0MTc4MTIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor professional"
+    },
+    {
+      "id": "admin-avatar",
+      "description": "Avatar for an admin",
+      "imageUrl": "https://images.unsplash.com/photo-1543132220-3ec99c6094dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBtYW58ZW58MHx8fHwxNzY0MTc5NjQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional man"
+    }
+  ]
 }
