@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Hospital } from 'lucide-react';
 
 export default function AppRootPage() {
@@ -10,13 +9,16 @@ export default function AppRootPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (loading) {
+      return; // Wait for authentication to complete
+    }
+    if (user) {
       router.replace(`/${user.role}/dashboard`);
-    } else if (!loading && !user) {
-        router.replace('/login');
+    } else {
+      router.replace('/login');
     }
   }, [user, loading, router]);
-  
+
   // Render a loading state while waiting for redirection
   return (
     <div className="flex h-full w-full items-center justify-center p-8">
