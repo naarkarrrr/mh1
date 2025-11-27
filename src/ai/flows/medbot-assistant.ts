@@ -13,7 +13,15 @@ import {z} from 'genkit';
 
 const MedBotAssistantInputSchema = z.object({
   query: z.string().describe('The question or request from the patient.'),
-  ehrData: z.string().optional().describe('The patient EHR data, if available.'),
+  patientEHR: z.object({
+      allergies: z.array(z.string()).optional().describe('List of known allergies.'),
+      chronic_conditions: z.array(z.string()).optional().describe('List of chronic conditions like diabetes, hypertension.'),
+      prescriptions: z.array(z.object({
+        drug_name: z.string(),
+        dosage: z.string(),
+        frequency: z.string(),
+      })).optional().describe('List of current prescriptions.')
+    }).optional().describe('A summary of the patient\'s Electronic Health Record.')
 });
 export type MedBotAssistantInput = z.infer<typeof MedBotAssistantInputSchema>;
 
@@ -32,12 +40,16 @@ const prompt = ai.definePrompt({
   output: {schema: MedBotAssistantOutputSchema},
   prompt: `You are a MedBot assistant providing information and support to patients.
 
-  Respond to the patient's query with accurate and helpful information.
+  Respond to the patient's query with accurate and helpful information. Your tone should be empathetic and clear.
 
-  If available, use the patient's EHR data to provide personalized responses.
-  EHR Data: {{{ehrData}}}
+  If available, use the patient's EHR data to provide personalized and safe responses.
+  Patient's Chronic Conditions: {{#each patientEHR.chronic_conditions}}{{{this}}}{{/each}}
+  Patient's Allergies: {{#each patientEHR.allergies}}{{{this}}}{{/each}}
+  Patient's Prescriptions: {{#each patientEHR.prescriptions}}{{this.drug_name}} ({{this.dosage}}, {{this.frequency}}){{/each}}
 
-  Query: {{{query}}}
+  Patient Query: {{{query}}}
+
+  Provide a helpful response. Do not diagnose, but you can provide information based on the data you have. If asked for medical advice, gently decline and advise consulting a doctor.
   `,
 });
 

@@ -12,10 +12,13 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const ProactiveAlertsInputSchema = z.object({
-  patientId: z.string().describe('The ID of the patient.'),
+  patientId: z.string().describe('The unique identifier for the patient (patient_id).'),
   aqi: z.number().describe('The Air Quality Index value.'),
   weatherCondition: z.string().describe('The current weather condition.'),
-  ehrData: z.string().describe('The Electronic Health Record data of the patient.'),
+  patientEHR: z.object({
+    allergies: z.array(z.string()).optional().describe('List of known allergies.'),
+    chronic_conditions: z.array(z.string()).optional().describe('List of chronic conditions like diabetes, hypertension.'),
+  }).describe('A summary of the patient\'s Electronic Health Record.'),
 });
 export type ProactiveAlertsInput = z.infer<typeof ProactiveAlertsInputSchema>;
 
@@ -36,7 +39,8 @@ const proactiveAlertsPrompt = ai.definePrompt({
   output: {schema: ProactiveAlertsOutputSchema},
   prompt: `You are a healthcare assistant that sends alerts to patients based on their health records, air quality index (AQI), and weather conditions.
 
-  Patient EHR data: {{{ehrData}}}
+  Patient Chronic Conditions: {{#each patientEHR.chronic_conditions}}{{{this}}}{{/each}}
+  Patient Allergies: {{#each patientEHR.allergies}}{{{this}}}{{/each}}
   Current AQI: {{{aqi}}}
   Current weather condition: {{{weatherCondition}}}
 

@@ -18,12 +18,13 @@ type Message = {
   text: string;
 };
 
-const ehrDataExample = `
-- Condition: Hypertension, diagnosed 2022.
-- Medication: Lisinopril 10mg, daily.
-- Allergies: Penicillin.
-- Last Visit: 2023-10-01, routine check-up, BP stable.
-`;
+const ehrDataExample = {
+    allergies: ["Penicillin"],
+    chronic_conditions: ["Hypertension"],
+    prescriptions: [
+        { drug_name: "Lisinopril", dosage: "10mg", frequency: "daily" }
+    ]
+};
 
 export function Chat() {
   const { user } = useAuth();
@@ -56,7 +57,7 @@ export function Chat() {
     setInput('');
 
     startTransition(async () => {
-      const response = await medBotAssistant({ query: input, ehrData: ehrDataExample });
+      const response = await medBotAssistant({ query: input, patientEHR: ehrDataExample });
       if (response && response.response) {
         const botMessage: Message = { role: 'bot', text: response.response };
         setMessages((prev) => [...prev, botMessage]);

@@ -1,4 +1,4 @@
-# 🚀 **VitalLens — AI + Blockchain Healthcare Command System**
+# 🚀 VitalLens — AI + Blockchain Healthcare Command System
 
 ### *See the future of patient care before it happens.*
 
@@ -12,19 +12,16 @@ VitalLens is built for **Hospitals, Government Health Departments, Emergency Ser
 
 ## 📌 **Table of Contents**
 
-* [Overview](#overview)
-* [Features](#features)
-* [System Architecture](#system-architecture)
-* [Tech Stack](#tech-stack)
-* [Modules](#modules)
-* [Database Schema](#database-schema)
-* [AI Services](#ai-services)
-* [Blockchain Layer](#blockchain-layer)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Performance Benchmarks](#performance-benchmarks)
-* [Team](#team)
-* [License](#license)
+* [Overview](#-overview)
+* [Features](#-features)
+* [System Architecture](#-system-architecture)
+* [Tech Stack](#-tech-stack)
+* [Database Schema](#-database-schema)
+* [AI Integration](#-ai--analytics-integration-layer)
+* [Installation](#-installation)
+* [Usage](#-usage)
+* [Team](#-team--hypothesisheuristics)
+* [License](#-license)
 
 ---
 
@@ -54,209 +51,196 @@ It predicts hospital inflow **before it happens**, optimizes resources using AI 
 # ✨ **Features**
 
 ### 🔮 **1. Predictive Surge Intelligence**
-
-Predicts patient inflow using hospital data + AQI + weather + public events.
-Helps hospitals prepare beds, doctors, ventilators, and medicine stock **days in advance**.
-
----
+Predicts patient inflow using hospital data + AQI + weather + public events. Helps hospitals prepare beds, doctors, ventilators, and medicine stock **days in advance**.
 
 ### 🔐 **2. Blockchain EHR Manager**
-
-All medical records get a **tamper-proof blockchain hash**.
-Patients control access permissions.
-
----
+All medical records get a **tamper-proof blockchain hash**. Patients control access permissions.
 
 ### 📜 **3. OCR Prescription Scanner + NLP**
-
-Scans handwritten prescriptions using OCR → converts to structured digital format.
-Detects risky drug combinations, allergies, and dosage conflicts.
-
----
+Scans handwritten prescriptions using OCR → converts to structured digital format. Detects risky drug combinations, allergies, and dosage conflicts.
 
 ### 🧠 **4. Agentic Resource Planner**
-
-AI allocates staff, beds, equipment, ventilators, and schedules shifts.
-Integrates with Google Calendar for automated notifications.
-
----
+AI allocates staff, beds, equipment, ventilators, and schedules shifts. Integrates with Google Calendar for automated notifications.
 
 ### 📡 **5. Proactive Health Advisory Agent**
-
-Monitors AQI, weather, disease outbreaks.
-Sends preventive alerts like:
-
-> “AQI 320 detected — avoid outdoor travel.”
-
----
+Monitors AQI, weather, disease outbreaks. Sends preventive alerts like: *“AQI 320 detected — avoid outdoor travel.”*
 
 ### 🤖 **6. MedBot Assistant**
-
-24/7 Generative AI assistant offering:
-
-* Advice
-* Appointment booking
-* EHR summaries
-* Medicine reminders
-
-Backed by blockchain-verified data.
-
----
+24/7 Generative AI assistant offering advice, appointment booking, EHR summaries, and medicine reminders, backed by blockchain-verified data.
 
 ### 🚑 **7. Emergency SOS System**
-
-One-tap encrypted location sharing with hospitals + ambulance dispatch + ETA tracking.
-All events logged immutably.
-
----
+One-tap encrypted location sharing with hospitals + ambulance dispatch + ETA tracking. All events logged immutably.
 
 ### 📦 **8. Inventory AI + Supply Chain Blockchain**
-
-Tracks medicine and equipment usage.
-Predicts shortages and triggers automated reorder alerts.
-
----
+Tracks medicine and equipment usage. Predicts shortages and triggers automated reorder alerts.
 
 ### 🗺️ **9. Citywide Hotspot Dashboard**
-
-Heatmaps showing predicted outbreak zones and patient surge hotspots.
-Helps public health authorities deploy resources.
+Heatmaps showing predicted outbreak zones and patient surge hotspots. Helps public health authorities deploy resources.
 
 ---
 
 # 🏗️ **System Architecture**
 
-```
-Frontend → Backend → AI Engines → Blockchain → Dashboards → Notifications
-```
+VitalLens is designed with a scalable, enterprise-grade architecture composed of 5 core layers.
 
-Includes:
+### **MODULE A — Patient & Clinical System**
+1.  **Patient Registration:** Manages patient demographics, contact information, and medical history.
+2.  **OPD / IPD Transaction System:** Handles outpatient and inpatient encounters.
+3.  **Clinical Documentation:** Records symptoms, diagnoses (provisional and final), and treatment notes.
+4.  **Vitals Monitoring:** Captures and tracks patient vital signs over time.
+5.  **Diagnostics & Lab Management:** Manages lab test orders and results.
+6.  **Prescription & Medication Orders:** Manages drug prescriptions, dosages, and administration routes.
 
-* Predictive AI pipelines
-* OCR pipelines
-* NLP medication risk engines
-* Agentic scheduling
-* Blockchain hashing
-* Aggregation and visualization layers
+### **MODULE B — Operational & Resource System**
+7.  **Bed Management:** Tracks bed status (occupied/available) across different wards.
+8.  **Ward / ICU Management:** Oversees operations within specific hospital wards.
+9.  **Staff & Scheduling:** Manages staff roles, specializations, and shifts.
+10. **Equipment Tracking:** Monitors the availability and location of medical equipment.
+11. **OT (Operation Theatre) Scheduling:** Manages the booking and scheduling of operating theatres.
+12. **Inventory & Pharmacy:** Tracks stock levels of medicines and supplies.
 
-(Architecture diagram included in repo)
+### **MODULE C — Financial & Administrative**
+13. **Billing & Insurance:** Manages patient billing and insurance claims (Optional for prototype).
+
+### **MODULE D — AI & Analytics Integration Layer**
+14. **Forecasting Engine:** Predicts patient admissions, bed demand, and inventory needs.
+15. **Recommendation Engine:** Suggests medications and diagnostic tests based on patient data.
+16. **Agentic AI:** Automates reordering, staff scheduling, and critical alerts.
+
+### **MODULE E — Integration Layer**
+17. **FHIR/HL7 Compliant API:** Ensures future interoperability with other hospital systems.
+18. **Supplier API Connectors:** Integrates with medical suppliers for automated procurement.
+19. **IoT Device Connectors:** Allows for future integration with devices for automatic vitals capture.
+
+This structure ensures VitalLens is future-ready and can integrate seamlessly with larger health ecosystems like Apollo, Manipal, NHS, insurance companies, and government health platforms.
 
 ---
 
 # 🧰 **Tech Stack**
 
 ### **Frontend**
+*   Next.js (React)
+*   Tailwind CSS
+*   Recharts
 
-* React
-* Tailwind CSS
-* Chart.js
-* Map APIs
+### **Backend & AI**
+*   **Genkit (Google AI):** Powers all generative AI features, including flows, prompts, and tool use.
+*   **Next.js Server Actions:** For backend logic and communication with AI services.
 
-### **Backend**
+### **Database**
+*   **Firestore:** Used for its scalability and real-time capabilities to store application data.
 
-* Flask
-* Firebase (Auth, Firestore, Storage, FCM)
-* Supabase
-* Docker
-* Google Cloud Platform
-
-### **AI/ML**
-
-* Scikit-learn
-* HuggingFace Transformers
-* OpenCV
-* LangChain
-* LangGraph
-* Crew AI
-
-### **Blockchain**
-
-* Ethereum (hash-based anchors for EHR, inventory logs, prescriptions)
-
-### **Communication**
-
-* Twilio SMS
-* FCM Push Notifications
+### **Deployment**
+*   **Firebase App Hosting:** For continuous deployment and scalable backend infrastructure.
 
 ---
 
-# 🧩 **Modules**
+# 🗄️ **Database Schema**
 
-```
-/modules
-  ├── surge_intelligence/
-  ├── ocr_prescription/
-  ├── blockchain_ehr/
-  ├── agentic_resource_planner/
-  ├── proactive_health_agent/
-  ├── medbot/
-  ├── emergency_sos/
-  ├── inventory_ai/
-  ├── hotspot_dashboard/
-```
+The system is built on an enterprise-level schema designed for real-world hospital operations.
+
+### **A. PATIENT REGISTRATION**
+| Field | Description |
+| :--- | :--- |
+| `patient_id` (PK) | Unique ID |
+| `first_name`, `last_name` | - |
+| `age`, `dob` | - |
+| `gender` | - |
+| `phone`, `email` | - |
+| `address` | - |
+| `emergency_contact`| - |
+| `allergies` | - |
+| `chronic_conditions`| e.g., diabetes, hypertension |
+
+### **B. ENCOUNTERS / VISITS**
+| Field | Description |
+| :--- | :--- |
+| `encounter_id` (PK) | Unique visit ID |
+| `patient_id` (FK) | Links to Patient |
+| `doctor_id` | Assigned doctor |
+| `department` | e.g., Orthopedics, Cardiology |
+| `encounter_type` | OPD / IPD / ER |
+| `date_time_in`, `date_time_out`| - |
+| `reason_for_visit`| Summary of symptoms |
+
+### **C. VITALS**
+| Field | Description |
+| :--- | :--- |
+| `vitals_id` (PK) | - |
+| `encounter_id` (FK) | Links to Encounter |
+| `temperature`, `heart_rate`, `systolic_bp`, `diastolic_bp`, `respiratory_rate`, `oxygen_saturation`, `weight` | - |
+
+### **D. SYMPTOMS & DIAGNOSES**
+| Field | Description |
+| :--- | :--- |
+| `diagnosis_id` (PK) | - |
+| `encounter_id` (FK) | - |
+| `symptoms` | Text description |
+| `provisional_diagnosis`| Initial diagnosis |
+| `final_diagnosis` | Confirmed diagnosis |
+| `icd10_code` | International standard code |
+
+### **E. LAB RESULTS**
+| Field | Description |
+| :--- | :--- |
+| `lab_test_id` (PK) | - |
+| `encounter_id` (FK) | - |
+| `test_name` | e.g., CBC, CRP |
+| `test_category` | Blood, Urine, Imaging |
+| `result_value`, `result_unit` | - |
+| `reference_range`, `result_flag`| e.g., High, Low, Normal |
+
+### **F. PRESCRIPTIONS**
+| Field | Description |
+| :--- | :--- |
+| `prescription_id` (PK) | - |
+| `encounter_id` (FK) | - |
+| `drug_name`, `dosage`, `frequency`, `duration`, `route` | - |
+
+### **G. BED MANAGEMENT**
+| Field | Description |
+| :--- | :--- |
+| `bed_id` (PK) | - |
+| `ward` | e.g., General, ICU |
+| `bed_type` | ICU, Ventilator, Normal |
+| `status` | Occupied, Available |
+| `patient_id` (FK) | If occupied |
+| `admitted_at`, `discharged_at` | - |
+
+### **H. STAFF & SCHEDULING**
+| Field | Description |
+| :--- | :--- |
+| `staff_id` (PK) | - |
+| `name`, `role`, `specialization`| e.g., Doctor, Nurse |
+| `shift_start`, `shift_end` | - |
+| `duty_status` | On, Off, Leave |
+
+### **I. INVENTORY & SUPPLIER DATA**
+| Field | Description |
+| :--- | :--- |
+| `item_id` (PK) | - |
+| `item_name` | e.g., Oxygen Cylinders |
+| `quantity_available`| - |
+| `min_required`, `reorder_level`| - |
+| `supplier_id`, `lead_time_days`| - |
 
 ---
 
-# 🗄️ **Database Schema (Firestore + Supabase)**
+# 🤖 **AI & Analytics Integration Layer**
 
-### **Firestore**
+The core of VitalLens's proactive capability lies in its AI layer.
 
-```
-/users/{userId}
-/ehr/{userId}/prescriptions/{id}
-/ehr/{userId}/medicalHistory/{id}
-/predictions/{hospitalId}
-/hospitals/{id}/schedule/{sid}
-/alerts/{userId}/{alertId}
-/inventory/{hospitalId}/{itemId}
-/inventory-alerts/{hospitalId}/{alertId}
-/sos/{sosId}
-/hotspots/{zoneId}
-```
+*   **Data Flow for AI:**
+    1.  Patient registers → `patient_id` created.
+    2.  New visit → `Encounters` table populated.
+    3.  Vitals, diagnosis, labs, and prescriptions are recorded in their respective tables.
+    4.  Patient admission updates the `Bed Management` table.
+    5.  Inventory consumption is tracked.
+    6.  **Agentic AI** runs daily to forecast demand spikes, using historical data from all tables.
+    7.  AI can trigger auto-orders from suppliers via integrated APIs.
 
-### **Supabase**
-
-* `patients`
-* `doctors`
-* `visits`
-* `ehr_records`
-* `inventory`
-* `procurement_logs`
-* `appointments`
-
----
-
-# 🤖 **AI Services**
-
-### Predictive Models
-
-* Time series forecasting
-* Deep learning event correlation
-
-### OCR + NLP
-
-* OpenCV prescription digitization
-* Drug safety analysis
-
-### Agentic Automation
-
-* Staff scheduling
-* Resource distribution
-* Inventory forecasting
-
----
-
-# ⛓️ **Blockchain Layer**
-
-VitalLens uses blockchain for:
-
-* EHR hashing
-* Prescription hash anchoring
-* Inventory audit trails
-* Emergency event logs
-* Access control verification
-
-Ethereum smart contracts store hashes, not raw medical data.
+*   **Future Integration (FHIR/HL7):**
+    To ensure VitalLens can integrate with any modern hospital system, it will expose FHIR-compliant APIs for key resources like `/Patient`, `/Observation`, `/MedicationRequest`, and `/Encounter`. This allows for seamless data exchange with government health systems, third-party apps, and insurance platforms.
 
 ---
 
@@ -266,72 +250,38 @@ Ethereum smart contracts store hashes, not raw medical data.
 git clone https://github.com/<your-repo>/VitalLens.git
 cd VitalLens
 
-# Install frontend dependencies
-cd frontend
+# Install dependencies
 npm install
 
-# Install backend dependencies
-cd ../backend
-pip install -r requirements.txt
-
-# Deploy Firebase
-firebase deploy
+# Run the development server
+npm run dev
 ```
-
-Add your environment configs:
-
-* Firebase
-* GCP
-* Supabase
-* Twilio
-* Blockchain provider
-* LLM API keys
+You will also need to add your Firebase project configuration to a `.env.local` file.
 
 ---
 
 # ▶️ **Usage**
 
-Start backend:
-
+Start the frontend:
 ```bash
-python app.py
+npm run dev
 ```
 
-Start frontend:
+Login with one of the predefined roles:
+*   Patient
+*   Doctor
+*   Admin
 
-```bash
-npm start
-```
-
-Login with:
-
-* Patient
-* Doctor
-* Admin
-
-Explore dashboards, upload prescriptions, test SOS system, and run predictions.
-
----
-
-# 📊 **Performance Benchmarks**
-
-Target KPIs:
-
-* 90% accuracy in surge predictions
-* 95% OCR extraction accuracy
-* <30 sec SOS dispatch alerts
-* 5 second hotspot dashboard refresh
-* 99.9% uptime
-* Zero data tampering (blockchain verification)
+Explore the dashboards, upload prescriptions, test the SOS system, and view AI-driven predictions.
 
 ---
 
 # 👥 **Team — HypothesisHeuristics**
 
-* **Neelay K. Joshi** — Team Lead
-* **Dhruv N. Save**
-* **Shreedhar B. Khorate**
-* **Shivam V. Narkar**
+*   **Neelay K. Joshi** — Team Lead
+*   **Dhruv N. Save**
+*   **Shreedhar B. Khorate**
+*   **Shivam V. Narkar**
 
 ---
 

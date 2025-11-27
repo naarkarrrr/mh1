@@ -9,29 +9,31 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {z}_ from 'zod';
 import {z} from 'genkit';
 
 const PredictInventoryShortageInputSchema = z.object({
-  hospitalId: z.string().describe('The ID of the hospital.'),
-  itemId: z.string().describe('The ID of the item to predict shortages for.'),
+  itemId: z.string().describe('The unique ID of the inventory item (item_id).'),
+  itemName: z.string().describe('The name of the item.'),
   usageLogs: z.array(
     z.object({
-      timestamp: z.string().describe('The timestamp of the usage log entry.'),
+      timestamp: z.string().describe('The timestamp of the usage log entry (YYYY-MM-DD HH:MM:SS).'),
       quantityUsed: z.number().describe('The quantity of the item used.'),
     })
   ).describe('Historical usage logs for the item.'),
-  leadTimeDays: z.number().describe('The lead time in days for reordering the item.'),
-  currentStockLevel: z.number().describe('The current stock level of the item.'),
+  leadTimeDays: z.number().describe('The lead time in days for reordering the item from the supplier.'),
+  currentStockLevel: z.number().describe('The current available quantity of the item (quantity_available).'),
+  minRequired: z.number().describe('The minimum required stock level for this item (min_required).'),
+  reorderLevel: z.number().describe('The stock level at which a reorder should be triggered (reorder_level).'),
 });
 
 export type PredictInventoryShortageInput = z.infer<typeof PredictInventoryShortageInputSchema>;
 
 const PredictInventoryShortageOutputSchema = z.object({
-  isShortagePredicted: z.boolean().describe('Whether a shortage is predicted.'),
-  predictedShortageDate: z.string().optional().describe('The predicted date of the shortage, if any.'),
-  predictedStockLevel: z.number().optional().describe('The predicted stock level at the time of the shortage, if any.'),
-  confidenceLevel: z.number().describe('The confidence level of the prediction (0-1).'),
-  recommendations: z.string().describe('Recommendations for avoiding the shortage.'),
+  isShortagePredicted: z.boolean().describe('Whether a shortage is predicted within the lead time.'),
+  predictedShortageDate: z.string().optional().describe('The predicted date (YYYY-MM-DD) of the stockout, if a shortage is predicted.'),
+  recommendedReorderQuantity: z.number().describe('The recommended quantity to reorder to avoid the shortage.'),
+  confidenceLevel: z.number().min(0).max(1).describe('The confidence level of the prediction (0 to 1).'),
 });
 
 export type PredictInventoryShortageOutput = z.infer<typeof PredictInventoryShortageOutputSchema>;
@@ -46,24 +48,29 @@ const predictInventoryShortagePrompt = ai.definePrompt({
   name: 'predictInventoryShortagePrompt',
   input: {schema: PredictInventoryShortageInputSchema},
   output: {schema: PredictInventoryShortageOutputSchema},
-  prompt: `You are an AI assistant that helps hospital administrators predict potential inventory shortages.
+  prompt: `You are an AI assistant for a hospital inventory management system. Your task is to predict potential stock shortages.
 
-You will receive historical usage logs for an item, the lead time for reordering the item, and the current stock level.
+Analyze the provided data for the inventory item to determine if its stock will fall below the minimum required level within the procurement lead time.
 
-Based on this information, you will predict whether a shortage is likely to occur.
+- Item ID: {{{itemId}}}
+- Item Name: {{{itemName}}}
+- Current Stock Level: {{{currentStockLevel}}}
+- Minimum Required Level: {{{minRequired}}}
+- Reorder Level: {{{reorderLevel}}}
+- Supplier Lead Time: {{{leadTimeDays}}} days
+- Historical Usage Logs:
+{{#each usageLogs}}
+  - Date: {{{timestamp}}}, Quantity Used: {{{quantityUsed}}}
+{{/each}}
 
-If a shortage is predicted, you will provide the predicted date of the shortage, the predicted stock level at the time of the shortage, and recommendations for avoiding the shortage.
+Based on the usage trend, calculate the daily consumption rate.
+Project the stock level over the next {{{leadTimeDays}}} days.
+Predict if a shortage (stock falling below {{{minRequired}}}) will occur.
+If a shortage is predicted, estimate the date.
+Calculate a recommended reorder quantity to bring stock back to a safe level.
+Provide a confidence score for your prediction.
 
-Consider the following information:
-Hospital ID: {{{hospitalId}}}
-Item ID: {{{itemId}}}
-Usage Logs: {{#each usageLogs}}{{{timestamp}}}: {{{quantityUsed}}}\n{{/each}}
-Lead Time (Days): {{{leadTimeDays}}}
-Current Stock Level: {{{currentStockLevel}}}
-
-Respond in JSON format.
-
-Include a confidenceLevel (0-1) indicating the certainty of the shortage prediction.
+Respond ONLY with a valid JSON object matching the prescribed output schema.
 `,
 });
 

@@ -9,10 +9,14 @@ import { Upload, Loader, FileCheck2, AlertTriangle, Pill } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
+type ProcessedResult = ProcessPrescriptionImageOutput & {
+    prescriptions: (ProcessPrescriptionImageOutput['prescriptions'][0] & { conflict?: string })[]
+};
+
 export default function UploadPrescriptionPage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [result, setResult] = useState<ProcessPrescriptionImageOutput | null>(null);
+  const [result, setResult] = useState<ProcessedResult | null>(null);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -45,11 +49,11 @@ export default function UploadPrescriptionPage() {
         const ocrResult = await processPrescriptionImage({ image: preview });
         
         // Dummy conflict check for demonstration
-        const resultWithConflicts = {
+        const resultWithConflicts: ProcessedResult = {
             ...ocrResult,
-            medicines: ocrResult.medicines.map(med => ({
+            prescriptions: ocrResult.prescriptions.map(med => ({
                 ...med,
-                conflict: med.name.toLowerCase().includes('amoxicillin') ? 'Potential mild interaction with Lisinopril.' : undefined
+                conflict: med.drug_name.toLowerCase().includes('amoxicillin') ? 'Potential mild interaction with Lisinopril.' : undefined
             }))
         }
         setResult(resultWithConflicts);
@@ -130,9 +134,9 @@ export default function UploadPrescriptionPage() {
                             </TableRow>
                             </TableHeader>
                             <TableBody>
-                            {result.medicines.map((med, index) => (
+                            {result.prescriptions.map((med, index) => (
                                 <TableRow key={index}>
-                                <TableCell className="font-medium">{med.name}
+                                <TableCell className="font-medium">{med.drug_name}
                                  {med.conflict && <Badge variant="destructive" className="ml-2 text-xs">Conflict</Badge>}
                                 </TableCell>
                                 <TableCell>{med.dosage}</TableCell>
@@ -141,12 +145,12 @@ export default function UploadPrescriptionPage() {
                             ))}
                             </TableBody>
                         </Table>
-                         {result.medicines.some(m => m.conflict) && 
+                         {result.prescriptions.some(m => m.conflict) && 
                             <div className="p-3 rounded-lg bg-yellow-100/50 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 flex items-start gap-3">
                                 <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-400 mt-1"/>
                                 <div>
                                     <h3 className="font-semibold text-yellow-800 dark:text-yellow-300">Potential Conflict Detected</h3>
-                                    {result.medicines.filter(m => m.conflict).map((med, i) => (
+                                    {result.prescriptions.filter(m => m.conflict).map((med, i) => (
                                          <p key={i} className="text-sm text-yellow-700 dark:text-yellow-400">{med.conflict}</p>
                                     ))}
                                     <p className="text-xs text-muted-foreground mt-2">Please consult your doctor about these potential interactions.</p>

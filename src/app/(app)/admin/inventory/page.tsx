@@ -5,12 +5,18 @@ import { Button } from '@/components/ui/button';
 import { Package, Bot } from 'lucide-react';
 
 const inventoryItems = [
-  { name: 'N95 Masks', id: 'mask-n95', stock: 1500, status: 'Low', lastOrdered: '2023-10-15' },
-  { name: 'Ventilators', id: 'vent-01', stock: 45, status: 'Stocked', lastOrdered: '2023-09-20' },
-  { name: 'Oxygen Cylinders (Large)', id: 'oxy-lg', stock: 80, status: 'Stocked', lastOrdered: '2023-10-05' },
-  { name: 'Saline Solution (1L)', id: 'sal-1l', stock: 50, status: 'Critical', lastOrdered: '2023-10-18' },
-  { name: 'ICU Bed', id: 'icu-bed', stock: 20, status: 'Stocked', lastOrdered: '2023-08-01' },
+  { item_id: 'mask-n95', item_name: 'N95 Masks', quantity_available: 1500, min_required: 1000, reorder_level: 1200, supplier_id: 'sup-01', lead_time_days: 7 },
+  { item_id: 'vent-01', item_name: 'Ventilators', quantity_available: 45, min_required: 30, reorder_level: 35, supplier_id: 'sup-02', lead_time_days: 30 },
+  { item_id: 'oxy-lg', item_name: 'Oxygen Cylinders (Large)', quantity_available: 80, min_required: 50, reorder_level: 60, supplier_id: 'sup-03', lead_time_days: 5 },
+  { item_id: 'sal-1l', item_name: 'Saline Solution (1L)', quantity_available: 50, min_required: 100, reorder_level: 80, supplier_id: 'sup-01', lead_time_days: 3 },
+  { item_id: 'icu-bed', item_name: 'ICU Bed', quantity_available: 20, min_required: 15, reorder_level: 18, supplier_id: 'sup-04', lead_time_days: 45 },
 ];
+
+const getStatus = (item: typeof inventoryItems[0]) => {
+    if (item.quantity_available < item.min_required) return 'Critical';
+    if (item.quantity_available <= item.reorder_level) return 'Low';
+    return 'Stocked';
+}
 
 const procurementLog = [
     { id: "proc-0012", item: "N95 Masks", quantity: 5000, date: "2023-10-15", hash: "0xabc...def" },
@@ -33,27 +39,30 @@ export default function InventoryPage() {
                     <TableHeader>
                     <TableRow>
                         <TableHead>Item</TableHead>
-                        <TableHead>Stock Level</TableHead>
+                        <TableHead>Available</TableHead>
+                        <TableHead>Reorder Level</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead>Last Ordered</TableHead>
                     </TableRow>
                     </TableHeader>
                     <TableBody>
-                    {inventoryItems.map((item) => (
-                        <TableRow key={item.id}>
-                        <TableCell className="font-medium">{item.name}</TableCell>
-                        <TableCell>{item.stock}</TableCell>
-                        <TableCell>
-                            <Badge
-                            variant={item.status === 'Critical' ? 'destructive' : item.status === 'Low' ? 'secondary' : 'default'}
-                            className={item.status === 'Low' ? 'bg-yellow-400/20 text-yellow-700' : ''}
-                            >
-                            {item.status}
-                            </Badge>
-                        </TableCell>
-                        <TableCell>{item.lastOrdered}</TableCell>
-                        </TableRow>
-                    ))}
+                    {inventoryItems.map((item) => {
+                        const status = getStatus(item);
+                        return (
+                            <TableRow key={item.item_id}>
+                            <TableCell className="font-medium">{item.item_name}</TableCell>
+                            <TableCell>{item.quantity_available}</TableCell>
+                            <TableCell>{item.reorder_level}</TableCell>
+                            <TableCell>
+                                <Badge
+                                variant={status === 'Critical' ? 'destructive' : status === 'Low' ? 'secondary' : 'default'}
+                                className={status === 'Low' ? 'bg-yellow-400/20 text-yellow-700' : ''}
+                                >
+                                {status}
+                                </Badge>
+                            </TableCell>
+                            </TableRow>
+                        );
+                    })}
                     </TableBody>
                 </Table>
                 </CardContent>
