@@ -13,6 +13,7 @@ import {
   Package,
   Map,
   Siren,
+  FileText,
 } from 'lucide-react';
 
 type NavLink = {
@@ -23,6 +24,7 @@ type NavLink = {
 
 export const patientNavLinks: NavLink[] = [
   { href: '/patient/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/patient/ehr', label: 'My EHR', icon: FileText },
   { href: '/patient/upload-prescription', label: 'Upload Prescription', icon: Upload },
   { href: '/patient/alerts', label: 'My Alerts', icon: Bell },
   { href: '/patient/medbot', label: 'MedBot Assistant', icon: MessageSquare },
@@ -42,3 +44,5 @@ export const adminNavLinks: NavLink[] = [
   { href: '/admin/hotspot-map', label: 'Hotspot Map', icon: Map },
   { href: '/admin/sos-dashboard', label: 'SOS Dashboard', icon: Siren },
 ];
+
+    

@@ -1,0 +1,208 @@
+
+{
+  "entities": {
+    "Patient": {
+      "title": "Patient",
+      "description": "Represents a patient in the system.",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string", "description": "Unique identifier for the patient." },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "dob": { "type": "string", "format": "date" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "address": { "type": "string" },
+        "emergencyContact": { "type": "string" },
+        "allergies": { "type": "array", "items": { "type": "string" } },
+        "chronicConditions": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["patientId", "firstName", "lastName", "dob"]
+    },
+    "Encounter": {
+      "title": "Encounter",
+      "description": "Represents a single patient encounter or visit.",
+      "type": "object",
+      "properties": {
+        "encounterId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "department": { "type": "string" },
+        "encounterType": { "type": "string", "enum": ["OPD", "IPD", "ER"] },
+        "dateTimeIn": { "type": "string", "format": "date-time" },
+        "dateTimeOut": { "type": "string", "format": "date-time" },
+        "reasonForVisit": { "type": "string" }
+      },
+      "required": ["encounterId", "patientId", "dateTimeIn"]
+    },
+    "Vitals": {
+      "title": "Vitals",
+      "description": "Patient's vital signs recorded during an encounter.",
+      "type": "object",
+      "properties": {
+        "vitalsId": { "type": "string" },
+        "encounterId": { "type": "string" },
+        "temperature": { "type": "number" },
+        "heartRate": { "type": "number" },
+        "systolicBp": { "type": "number" },
+        "diastolicBp": { "type": "number" },
+        "respiratoryRate": { "type": "number" },
+        "oxygenSaturation": { "type": "number" },
+        "weight": { "type": "number" }
+      },
+      "required": ["vitalsId", "encounterId"]
+    },
+    "Diagnosis": {
+      "title": "Diagnosis",
+      "description": "Diagnosis details for an encounter.",
+      "type": "object",
+      "properties": {
+        "diagnosisId": { "type": "string" },
+        "encounterId": { "type": "string" },
+        "symptoms": { "type": "string" },
+        "provisionalDiagnosis": { "type": "string" },
+        "finalDiagnosis": { "type": "string" },
+        "icd10Code": { "type": "string" }
+      },
+      "required": ["diagnosisId", "encounterId"]
+    },
+    "LabResult": {
+      "title": "Lab Result",
+      "description": "Results of a laboratory test.",
+      "type": "object",
+      "properties": {
+        "labTestId": { "type": "string" },
+        "encounterId": { "type": "string" },
+        "testName": { "type": "string" },
+        "testCategory": { "type": "string" },
+        "resultValue": { "type": "string" },
+        "resultUnit": { "type": "string" },
+        "referenceRange": { "type": "string" },
+        "resultFlag": { "type": "string", "enum": ["High", "Low", "Normal"] }
+      },
+      "required": ["labTestId", "encounterId", "testName"]
+    },
+    "Prescription": {
+      "title": "Prescription",
+      "description": "Medication prescription for a patient.",
+      "type": "object",
+      "properties": {
+        "prescriptionId": { "type": "string" },
+        "encounterId": { "type": "string" },
+        "drug_name": { "type": "string" },
+        "dosage": { "type": "string" },
+        "frequency": { "type": "string" },
+        "duration": { "type": "string" },
+        "route": { "type": "string" }
+      },
+      "required": ["prescriptionId", "encounterId", "drug_name", "dosage", "frequency"]
+    },
+    "Bed": {
+      "title": "Bed",
+      "description": "Represents a bed in the hospital.",
+      "type": "object",
+      "properties": {
+        "bedId": { "type": "string" },
+        "ward": { "type": "string" },
+        "bedType": { "type": "string" },
+        "status": { "type": "string", "enum": ["occupied", "available"] },
+        "patientId": { "type": "string" },
+        "admittedAt": { "type": "string", "format": "date-time" },
+        "dischargedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["bedId", "ward", "status"]
+    },
+    "Staff": {
+      "title": "Staff",
+      "description": "Represents a hospital staff member.",
+      "type": "object",
+      "properties": {
+        "staffId": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "specialization": { "type": "string" },
+        "shiftStart": { "type": "string", "format": "time" },
+        "shiftEnd": { "type": "string", "format": "time" },
+        "dutyStatus": { "type": "string", "enum": ["on", "off", "leave"] }
+      },
+      "required": ["staffId", "name", "role"]
+    },
+    "Equipment": {
+      "title": "Equipment",
+      "description": "Represents a piece of medical equipment.",
+      "type": "object",
+      "properties": {
+        "equipmentId": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string" },
+        "lastServiced": { "type": "string", "format": "date" },
+        "usageCount": { "type": "number" }
+      },
+      "required": ["equipmentId", "name"]
+    },
+    "InventoryItem": {
+      "title": "Inventory Item",
+      "description": "Represents an item in the hospital inventory.",
+      "type": "object",
+      "properties": {
+        "itemId": { "type": "string" },
+        "itemName": { "type": "string" },
+        "quantityAvailable": { "type": "number" },
+        "minRequired": { "type": "number" },
+        "reorderLevel": { "type": "number" },
+        "supplierId": { "type": "string" },
+        "leadTimeDays": { "type": "number" }
+      },
+      "required": ["itemId", "itemName", "quantityAvailable"]
+    }
+  },
+  "auth": {
+    "providers": ["email"]
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": { "$ref": "#/entities/Patient" },
+      "description": "Stores patient information."
+    },
+    "/encounters/{encounterId}": {
+      "schema": { "$ref": "#/entities/Encounter" },
+      "description": "Stores patient encounter details."
+    },
+    "/vitals/{vitalsId}": {
+      "schema": { "$ref": "#/entities/Vitals" },
+      "description": "Stores patient vitals for an encounter."
+    },
+    "/diagnoses/{diagnosisId}": {
+      "schema": { "$ref": "#/entities/Diagnosis" },
+      "description": "Stores diagnoses for an encounter."
+    },
+    "/labs/{labTestId}": {
+      "schema": { "$ref": "#/entities/LabResult" },
+      "description": "Stores lab results for an encounter."
+    },
+    "/prescriptions/{prescriptionId}": {
+      "schema": { "$ref": "#/entities/Prescription" },
+      "description": "Stores prescriptions for an encounter."
+    },
+    "/beds/{bedId}": {
+      "schema": { "$ref": "#/entities/Bed" },
+      "description": "Stores hospital bed information."
+    },
+    "/staff/{staffId}": {
+      "schema": { "$ref": "#/entities/Staff" },
+      "description": "Stores staff member information."
+    },
+    "/equipment/{equipmentId}": {
+      "schema": { "$ref": "#/entities/Equipment" },
+      "description": "Stores medical equipment information."
+    },
+    "/inventory/{itemId}": {
+      "schema": { "$ref": "#/entities/InventoryItem" },
+      "description": "Stores inventory item information."
+    }
+  }
+}
+
+    
