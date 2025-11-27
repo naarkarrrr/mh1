@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/card';
 import { BarChart2, Siren, Package, List } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const adminStats = [
     { title: "Active SOS Alerts", value: "3", icon: Siren, href: "/admin/sos-dashboard", color: "text-red-500" },
@@ -65,8 +66,4 @@ export default function AdminDashboardPage() {
       </div>
     </div>
   );
-}
-
-function cn(...classes: (string | undefined)[]) {
-    return classes.filter(Boolean).join(' ')
 }
