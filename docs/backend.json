@@ -1,4 +1,3 @@
-
 {
   "entities": {
     "Patient": {
@@ -73,16 +72,16 @@
       "description": "Results of a laboratory test.",
       "type": "object",
       "properties": {
-        "labTestId": { "type": "string" },
+        "labId": { "type": "string" },
         "encounterId": { "type": "string" },
         "testName": { "type": "string" },
         "testCategory": { "type": "string" },
         "resultValue": { "type": "string" },
         "resultUnit": { "type": "string" },
         "referenceRange": { "type": "string" },
-        "resultFlag": { "type": "string", "enum": ["High", "Low", "Normal"] }
+        "flag": { "type": "string", "enum": ["High", "Low", "Normal"] }
       },
-      "required": ["labTestId", "encounterId", "testName"]
+      "required": ["labId", "encounterId", "testName"]
     },
     "Prescription": {
       "title": "Prescription",
@@ -150,9 +149,9 @@
         "itemId": { "type": "string" },
         "itemName": { "type": "string" },
         "quantityAvailable": { "type": "number" },
-        "minRequired": { "type": "number" },
         "reorderLevel": { "type": "number" },
         "supplierId": { "type": "string" },
+        "minRequired": { "type": "number" },
         "leadTimeDays": { "type": "number" }
       },
       "required": ["itemId", "itemName", "quantityAvailable"]
@@ -164,11 +163,11 @@
   "firestore": {
     "/patients/{patientId}": {
       "schema": { "$ref": "#/entities/Patient" },
-      "description": "Stores patient information."
+      "description": "Stores individual patient records."
     },
     "/encounters/{encounterId}": {
       "schema": { "$ref": "#/entities/Encounter" },
-      "description": "Stores patient encounter details."
+      "description": "Stores patient encounter details (OPD, IPD, ER)."
     },
     "/vitals/{vitalsId}": {
       "schema": { "$ref": "#/entities/Vitals" },
@@ -178,7 +177,7 @@
       "schema": { "$ref": "#/entities/Diagnosis" },
       "description": "Stores diagnoses for an encounter."
     },
-    "/labs/{labTestId}": {
+    "/labs/{labId}": {
       "schema": { "$ref": "#/entities/LabResult" },
       "description": "Stores lab results for an encounter."
     },
@@ -188,11 +187,11 @@
     },
     "/beds/{bedId}": {
       "schema": { "$ref": "#/entities/Bed" },
-      "description": "Stores hospital bed information."
+      "description": "Stores status and allocation of hospital beds."
     },
     "/staff/{staffId}": {
       "schema": { "$ref": "#/entities/Staff" },
-      "description": "Stores staff member information."
+      "description": "Stores staff member information and schedules."
     },
     "/equipment/{equipmentId}": {
       "schema": { "$ref": "#/entities/Equipment" },
@@ -200,9 +199,7 @@
     },
     "/inventory/{itemId}": {
       "schema": { "$ref": "#/entities/InventoryItem" },
-      "description": "Stores inventory item information."
+      "description": "Stores hospital inventory and pharmacy stock levels."
     }
   }
 }
-
-    

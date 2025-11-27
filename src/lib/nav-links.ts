@@ -1,48 +1,62 @@
 import type { LucideIcon } from 'lucide-react';
 import {
   LayoutDashboard,
-  HeartPulse,
-  Upload,
-  Bell,
-  MessageSquare,
-  ShieldAlert,
-  Stethoscope,
   Users,
-  BarChart2,
-  List,
+  Bed,
+  Calendar,
+  FlaskConical,
+  Pill,
+  ShieldAlert,
+  Settings,
+  Warehouse,
+  Bot,
+  HeartPulse,
   Package,
-  Map,
   Siren,
   FileText,
+  Stethoscope,
+  Microscope,
+  Waypoints
 } from 'lucide-react';
 
-type NavLink = {
+export type NavLink = {
   href: string;
   label: string;
   icon: LucideIcon;
 };
 
-export const patientNavLinks: NavLink[] = [
-  { href: '/patient/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/patient/ehr', label: 'My EHR', icon: FileText },
-  { href: '/patient/upload-prescription', label: 'Upload Prescription', icon: Upload },
-  { href: '/patient/alerts', label: 'My Alerts', icon: Bell },
-  { href: '/patient/medbot', label: 'MedBot Assistant', icon: MessageSquare },
-  { href: '/patient/sos', label: 'Emergency SOS', icon: ShieldAlert },
+export const adminNavLinks: NavLink[] = [
+  { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/staff', label: 'Staff Management', icon: Users },
+  { href: '/admin/inventory', label: 'Inventory', icon: Warehouse },
+  { href: '/admin/ai', label: 'AI & Analytics', icon: Bot },
+  { href: '/admin/settings', label: 'System Settings', icon: Settings },
 ];
 
 export const doctorNavLinks: NavLink[] = [
   { href: '/doctor/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/doctor/patient/patient-001', label: 'Patient View', icon: Users },
+  { href: '/doctor/patients', label: 'My Patients', icon: Users },
+  { href: '/doctor/schedule', label: 'My Schedule', icon: Calendar },
 ];
 
-export const adminNavLinks: NavLink[] = [
-  { href: '/admin/dashboard', label: 'Admin Dashboard', icon: LayoutDashboard },
-  { href: '/admin/surge-dashboard', label: 'Surge Prediction', icon: BarChart2 },
-  { href: '/admin/resource-planner', label: 'Resource Planner', icon: List },
-  { href: '/admin/inventory', label: 'Inventory', icon: Package },
-  { href: '/admin/hotspot-map', label: 'Hotspot Map', icon: Map },
-  { href: '/admin/sos-dashboard', label: 'SOS Dashboard', icon: Siren },
+export const nurseNavLinks: NavLink[] = [
+    { href: '/nurse/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/nurse/beds', label: 'Bed Management', icon: Bed },
+    { href: '/nurse/vitals', label: 'Record Vitals', icon: HeartPulse },
 ];
 
-    
+export const pharmacistNavLinks: NavLink[] = [
+    { href: '/pharmacist/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/pharmacist/inventory', label: 'Pharmacy Inventory', icon: Warehouse },
+    { href: '/pharmacist/prescriptions', label: 'Dispense', icon: Pill },
+];
+
+export const labTechnicianNavLinks: NavLink[] = [
+    { href: '/lab/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/lab/tests', label: 'Manage Tests', icon: Microscope },
+    { href: '/lab/results', label: 'Enter Results', icon: FlaskConical },
+];
+
+export const defaultNavLinks: NavLink[] = [
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+]

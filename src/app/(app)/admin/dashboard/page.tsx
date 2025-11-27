@@ -1,69 +1,77 @@
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { BarChart2, Siren, Package, List } from 'lucide-react';
+import { Users, Bed, Warehouse, Bot } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 
-const adminStats = [
-    { title: "Active SOS Alerts", value: "3", icon: Siren, href: "/admin/sos-dashboard", color: "text-red-500" },
-    { title: "Predicted Surges (24h)", value: "2", icon: BarChart2, href: "/admin/surge-dashboard" },
-    { title: "Low Inventory Items", value: "8", icon: Package, href: "/admin/inventory" },
-    { title: "Staff Schedules Pending", value: "1", icon: List, href: "/admin/resource-planner" },
+const dashboardStats = [
+    { title: "Active Staff", value: "128", icon: Users, href: "/admin/staff" },
+    { title: "Bed Occupancy", value: "85%", icon: Bed, href: "/admin/beds" },
+    { title: "Low Stock Items", value: "12", icon: Warehouse, href: "/admin/inventory" },
+    { title: "AI System Status", value: "Nominal", icon: Bot, href: "/admin/ai" },
 ]
 
 export default function AdminDashboardPage() {
   return (
-    <div className="container mx-auto p-4 md:p-6 lg:p-8">
-      <h1 className="text-3xl font-bold font-headline mb-6">Admin Dashboard</h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {adminStats.map((stat) => (
+    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        {dashboardStats.map((stat) => (
             <Link href={stat.href} key={stat.title}>
-                <Card className="hover:bg-muted transition-colors">
+                <Card className="hover:border-primary transition-colors">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                    <stat.icon className={cn("h-4 w-4 text-muted-foreground", stat.color)} />
+                    <stat.icon className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className={`text-2xl font-bold ${stat.color || ''}`}>{stat.value}</div>
-                    <p className="text-xs text-muted-foreground">Click to view details</p>
+                    <div className="text-2xl font-bold">{stat.value}</div>
                 </CardContent>
                 </Card>
             </Link>
         ))}
       </div>
-      <div className="mt-8 grid gap-8 md:grid-cols-2">
-        <Card>
-            <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-sm text-muted-foreground">Activity feed will be displayed here.</p>
-            </CardContent>
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <Card className="xl:col-span-2">
+          <CardHeader>
+            <CardTitle>Hospital Status Overview</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* Placeholder for a more detailed chart or table */}
+            <p className="text-muted-foreground">Live operational charts will be displayed here.</p>
+          </CardContent>
         </Card>
-         <Card>
-            <CardHeader>
-                <CardTitle>System Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="flex justify-between items-center text-sm">
-                    <span>AI Services</span>
-                    <span className="text-green-500 font-semibold">Operational</span>
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>
+              Recent significant events in the system.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+             <div className="flex items-center gap-4">
+                <div className="rounded-full bg-primary/10 p-2">
+                    <Users className="h-5 w-5 text-primary"/>
                 </div>
-                 <div className="flex justify-between items-center text-sm mt-2">
-                    <span>Blockchain Ledger</span>
-                    <span className="text-green-500 font-semibold">Synchronized</span>
+                <div className="text-sm">
+                    <p className="font-medium">New staff member Dr. Emily Carter onboarded.</p>
+                    <p className="text-xs text-muted-foreground">2 hours ago</p>
                 </div>
-                 <div className="flex justify-between items-center text-sm mt-2">
-                    <span>Notification Service</span>
-                    <span className="text-green-500 font-semibold">Active</span>
+             </div>
+             <div className="flex items-center gap-4">
+                <div className="rounded-full bg-warning/10 p-2">
+                    <Warehouse className="h-5 w-5 text-warning"/>
                 </div>
-            </CardContent>
+                <div className="text-sm">
+                    <p className="font-medium">Paracetamol stock is running low.</p>
+                    <p className="text-xs text-muted-foreground">5 hours ago</p>
+                </div>
+             </div>
+          </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 }

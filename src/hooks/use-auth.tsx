@@ -3,7 +3,8 @@
 import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-export type Role = 'patient' | 'doctor' | 'admin';
+export type Role = 'admin' | 'doctor' | 'nurse' | 'pharmacist' | 'lab_technician' | 'staff';
+
 export type User = {
   id: string;
   name: string;
@@ -20,27 +21,48 @@ type AuthContextType = {
 };
 
 const mockUsers: Record<Role, User> = {
-  patient: {
-    id: 'patient-001',
-    name: 'Alex Ray',
-    email: 'alex.ray@example.com',
-    role: 'patient',
-    avatar: 'https://picsum.photos/seed/patient1/100/100',
+  admin: {
+    id: 'admin-001',
+    name: 'Dr. James Wilson',
+    email: 'j.wilson@hms.com',
+    role: 'admin',
+    avatar: 'https://picsum.photos/seed/admin/100/100',
   },
   doctor: {
     id: 'doctor-001',
-    name: 'Dr. Evelyn Reed',
-    email: 'e.reed@hospital.com',
+    name: 'Dr. Allison Cameron',
+    email: 'a.cameron@hms.com',
     role: 'doctor',
-    avatar: 'https://picsum.photos/seed/doctor1/100/100',
+    avatar: 'https://picsum.photos/seed/doctor/100/100',
   },
-  admin: {
-    id: 'admin-001',
-    name: 'Maria Garcia',
-    email: 'm.garcia@vlens.com',
-    role: 'admin',
-    avatar: 'https://picsum.photos/seed/admin1/100/100',
+  nurse: {
+    id: 'nurse-001',
+    name: 'Robert Chase',
+    email: 'r.chase@hms.com',
+    role: 'nurse',
+    avatar: 'https://picsum.photos/seed/nurse/100/100',
   },
+  pharmacist: {
+    id: 'pharm-001',
+    name: 'Lisa Cuddy',
+    email: 'l.cuddy@hms.com',
+    role: 'pharmacist',
+    avatar: 'https://picsum.photos/seed/pharmacist/100/100',
+  },
+  lab_technician: {
+    id: 'lab-001',
+    name: 'Eric Foreman',
+    email: 'e.foreman@hms.com',
+    role: 'lab_technician',
+    avatar: 'https://picsum.photos/seed/labtech/100/100',
+  },
+  staff: {
+      id: 'staff-001',
+      name: 'Chris Taub',
+      email: 'c.taub@hms.com',
+      role: 'staff',
+      avatar: 'https://picsum.photos/seed/staff/100/100',
+  }
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -53,13 +75,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem('vital-lens-user');
+      const storedUser = localStorage.getItem('hms-core-user');
       if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        const parsedUser: User = JSON.parse(storedUser);
+        // Basic validation
+        if (mockUsers[parsedUser.role]) {
+            setUser(parsedUser);
+        } else {
+            localStorage.removeItem('hms-core-user');
+        }
       }
     } catch (error) {
       console.error('Failed to parse user from localStorage', error);
-      localStorage.removeItem('vital-lens-user');
+      localStorage.removeItem('hms-core-user');
     } finally {
       setLoading(false);
     }
@@ -68,27 +96,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = (role: Role) => {
     setLoading(true);
     const userToLogin = mockUsers[role];
-    localStorage.setItem('vital-lens-user', JSON.stringify(userToLogin));
+    localStorage.setItem('hms-core-user', JSON.stringify(userToLogin));
     setUser(userToLogin);
-    switch (role) {
-      case 'patient':
-        router.push('/patient/dashboard');
-        break;
-      case 'doctor':
-        router.push('/doctor/dashboard');
-        break;
-      case 'admin':
-        router.push('/admin/dashboard');
-        break;
-      default:
-        router.push('/login');
-    }
+    
+    // Redirect based on role
+    router.push(`/${role}/dashboard`);
+
     setLoading(false);
   };
 
   const logout = () => {
     setLoading(true);
-    localStorage.removeItem('vital-lens-user');
+    localStorage.removeItem('hms-core-user');
     setUser(null);
     router.push('/login');
     setLoading(false);

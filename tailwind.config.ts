@@ -17,9 +17,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['var(--font-body)', 'sans-serif'],
-        headline: ['var(--font-headline)', 'sans-serif'],
-        code: ['var(--font-code)', 'monospace'],
+        sans: ['var(--font-body)', 'sans-serif'],
+        mono: ['var(--font-code)', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -39,6 +38,14 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -55,11 +62,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        status: {
-          success: "hsl(var(--status-success))",
-          warning: "hsl(var(--status-warning))",
-          danger: "hsl(var(--status-danger))",
-        },
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',
@@ -73,17 +75,6 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      boxShadow: {
-        'glow-primary': '0 0 15px hsl(var(--primary)), 0 0 5px hsl(var(--primary))',
-        'glow-primary-sm': '0 0 8px hsl(var(--primary))',
-        'glow-accent': '0 0 15px hsl(var(--accent)), 0 0 5px hsl(var(--accent))',
-        'glow-danger': '0 0 15px hsl(var(--status-danger)), 0 0 5px hsl(var(--status-danger))',
-        'glow-danger-lg': '0 0 25px hsl(var(--status-danger)), 0 0 10px hsl(var(--status-danger))',
-      },
-      textShadow: {
-        'glow-primary': '0 0 8px hsl(var(--primary) / 0.7)',
-        'glow-accent': '0 0 8px hsl(var(--accent) / 0.7)',
-      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -93,39 +84,14 @@ export default {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
-        'fade-in': {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
-        },
-        'fade-in-blur': {
-          from: { opacity: '0', filter: 'blur(10px)' },
-          to: { opacity: '1', filter: 'blur(0px)' },
-        },
-        'pulse-fast': {
-          '50%': { opacity: '0.5' },
-        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.5s ease-in-out',
-        'fade-in-blur': 'fade-in-blur 0.8s ease-out forwards',
-        'pulse-fast': 'pulse-fast 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },
   plugins: [
       require('tailwindcss-animate'),
-      function ({ theme, addUtilities }: {theme: any, addUtilities: any}) {
-        const textShadowUtilities = {
-          '.text-glow-primary': {
-            textShadow: theme('textShadow.glow-primary'),
-          },
-          '.text-glow-accent': {
-            textShadow: theme('textShadow.glow-accent'),
-          },
-        };
-        addUtilities(textShadowUtilities, ['responsive', 'hover']);
-      },
   ],
 } satisfies Config;

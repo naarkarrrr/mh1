@@ -11,7 +11,7 @@ export default function AppLayout({
       <Sidebar />
       <div className="flex flex-1 flex-col">
         <Header />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900/50">
           {children}
         </main>
       </div>

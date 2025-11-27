@@ -5,20 +5,34 @@ import { HeartPulse, Menu } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
-import { patientNavLinks, doctorNavLinks, adminNavLinks } from '@/lib/nav-links';
+import {
+  adminNavLinks,
+  doctorNavLinks,
+  nurseNavLinks,
+  pharmacistNavLinks,
+  labTechnicianNavLinks,
+  defaultNavLinks
+} from '@/lib/nav-links';
 import type { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Hospital } from 'lucide-react';
 
 export default function Sidebar() {
   const { user } = useAuth();
 
   const navLinks =
-    user?.role === 'patient'
-      ? patientNavLinks
+    user?.role === 'admin'
+      ? adminNavLinks
       : user?.role === 'doctor'
       ? doctorNavLinks
-      : adminNavLinks;
+      : user?.role === 'nurse'
+      ? nurseNavLinks
+      : user?.role === 'pharmacist'
+      ? pharmacistNavLinks
+      : user?.role === 'lab_technician'
+      ? labTechnicianNavLinks
+      : defaultNavLinks;
 
   return (
     <>
@@ -26,22 +40,22 @@ export default function Sidebar() {
       <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="fixed top-4 left-4 z-50 glass-pane">
-              <Menu className="h-6 w-6" />
+            <Button variant="outline" size="icon" className="fixed top-4 left-4 z-50 bg-background/80 backdrop-blur-sm">
+              <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="flex flex-col w-72 p-0 glass-pane !border-r-white/20">
-             <nav className="flex-1 flex flex-col gap-4 p-4">
+          <SheetContent side="left" className="flex flex-col w-72 p-0 bg-background">
+             <nav className="flex-1 flex flex-col gap-2 p-4">
                 <Link
-                href="#"
-                className="flex items-center gap-2 text-2xl font-semibold font-headline px-2 text-glow-primary"
+                href="/"
+                className="flex items-center gap-2 text-lg font-semibold px-2 mb-4"
               >
-                <HeartPulse className="h-7 w-7 text-primary" />
-                <span>VitalLens</span>
+                <Hospital className="h-6 w-6 text-primary" />
+                <span>HMS-Core</span>
               </Link>
                 {navLinks.map((link) => (
-                  <SidebarLink key={link.href} href={link.href} icon={link.icon} label={link.label} />
+                  <SidebarLink key={link.href} href={link.href} icon={link.icon} label={link.label} isMobile />
                 ))}
               </nav>
           </SheetContent>
@@ -49,40 +63,39 @@ export default function Sidebar() {
       </div>
       
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block lg:w-64 xl:w-72">
-        <div className="flex h-full max-h-screen flex-col gap-2 glass-pane !rounded-none !border-l-0 !border-t-0 !border-b-0 !border-r-white/10">
-          <div className="flex h-14 items-center border-b border-white/10 px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold font-headline text-2xl text-glow-primary">
-              <HeartPulse className="h-7 w-7 text-primary" />
-              <span className="">VitalLens</span>
-            </Link>
-          </div>
-          <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              {navLinks.map((link) => (
-                <SidebarLink key={link.href} href={link.href} icon={link.icon} label={link.label} />
-              ))}
-            </nav>
-          </div>
+      <div className="hidden lg:flex lg:flex-col lg:w-64 border-r bg-card text-card-foreground">
+        <div className="flex h-16 items-center border-b px-6">
+          <Link href="/" className="flex items-center gap-2 font-semibold">
+            <Hospital className="h-6 w-6 text-primary" />
+            <span className="">HMS-Core</span>
+          </Link>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          <nav className="grid items-start p-4 text-sm font-medium">
+            {navLinks.map((link) => (
+              <SidebarLink key={link.href} href={link.href} icon={link.icon} label={link.label} />
+            ))}
+          </nav>
         </div>
       </div>
     </>
   );
 }
 
-function SidebarLink({ href, icon: Icon, label }: { href: string; icon: LucideIcon; label: string }) {
+function SidebarLink({ href, icon: Icon, label, isMobile }: { href: string; icon: LucideIcon; label: string, isMobile?: boolean }) {
   const pathname = usePathname();
-  const isActive = pathname === href;
+  const isActive = pathname.startsWith(href);
 
   return (
     <Link
       href={href}
       className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-muted-foreground transition-all hover:text-white hover:bg-white/10 text-base',
-        isActive && 'bg-primary/20 text-primary font-bold shadow-glow-primary-sm'
+        'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-primary/10',
+        isActive && 'bg-primary/10 text-primary font-semibold',
+        isMobile ? 'text-base' : 'text-sm'
       )}
     >
-      <Icon className={cn('h-5 w-5', isActive && 'text-primary')} />
+      <Icon className={cn('h-4 w-4', isActive && 'text-primary')} />
       {label}
     </Link>
   );

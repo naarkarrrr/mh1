@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Orbitron, Inter, Source_Code_Pro } from 'next/font/google';
+import { Inter, Source_Code_Pro } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/hooks/use-auth';
 import { Toaster } from '@/components/ui/toaster';
@@ -10,19 +10,14 @@ const inter = Inter({
   variable: '--font-body',
 });
 
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  variable: '--font-headline',
-});
-
 const sourceCodePro = Source_Code_Pro({
   subsets: ['latin'],
   variable: '--font-code',
 });
 
 export const metadata: Metadata = {
-  title: 'VitalLens',
-  description: 'AI + Blockchain Healthcare System',
+  title: 'HMS-Core',
+  description: 'Enterprise-grade Hospital Management System',
 };
 
 export default function RootLayout({
@@ -34,9 +29,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background font-body antialiased',
+          'min-h-screen bg-background font-sans antialiased',
           inter.variable,
-          orbitron.variable,
           sourceCodePro.variable
         )}
       >
