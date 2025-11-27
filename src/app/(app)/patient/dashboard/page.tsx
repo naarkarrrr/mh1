@@ -2,7 +2,7 @@
 import { useAuth } from '@/hooks/use-auth';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Bell, MessageSquare, Upload, ShieldAlert, FileText } from 'lucide-react';
+import { Bell, MessageSquare, Upload, ShieldAlert, FileText, Pill } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const quickLinks = [
